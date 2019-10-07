@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://tomkdev:tomkdev321@cluster0-gcmm6.mongodb.net/admin?retryWrites=true&w=majority",
+  "jwtSecret": "b17o2O2SAB"
+}

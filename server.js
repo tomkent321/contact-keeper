@@ -1,6 +1,15 @@
 const express = require('express');
+const connectDB = require('./config/db');
 
 const app = express();
+
+// Connect the DB
+
+connectDB();
+
+// Init middleware
+// this allows 'body parsing'
+app.use(express.json({extended: false}));
 
 app.get('/', (req, res) => res.json({msg: "I'm listening here on the home address!"}));
 
