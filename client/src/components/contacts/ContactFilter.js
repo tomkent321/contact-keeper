@@ -5,6 +5,8 @@ const ContactFilter = () => {
   const contactContext = useContext(ContactContext);
   const { filterContacts, clearFilter, filtered } = contactContext;
   const text = useRef('');
+  
+// keep filtered as an empty string
 
   useEffect(() => {
     if (filtered === null) {
