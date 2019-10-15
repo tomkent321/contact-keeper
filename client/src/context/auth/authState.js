@@ -4,22 +4,41 @@ import authReducer from './authReducer';
 import * as actionType from '../types';
 
 const AuthState = props => {
-  const initialState = {};
+  const initialState = {
+    token: localStorage.getItem('token'),
+    isAuthenticated: null,
+    loading: true,
+    user: null,
+    error: null
+  };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   // Actions   ***********
 
-  // Add Contact
+  // Load User
 
-  // const addContact = contact => {
-  //   contact.id = uuid.v4();
-  //   dispatch({ type: actionType.ADD_CONTACT, payload: contact });
-  // };
+  // Register User
+
+  // Login User
+
+  // Logout
+
+  // ClearErrors
 
   return (
-    <AuthContext.Provider value={{}}>{props.children}</AuthContext.Provider>
+    <AuthContext.Provider
+      value={{
+        token: state.token,
+        isAuthenticated: state.isAuthenticated,
+        loading: state.loading,
+        user: state.user,
+        error: state.error
+      }}
+    >
+      {props.children}
+    </AuthContext.Provider>
   );
 };
 
-export default ContactState;
+export default AuthState;

@@ -1,0 +1,8 @@
+In that case, first get the process ID (PID) of the process running on that port (say 8888):
+
+lsof -i tcp:5000
+
+
+kill -15 5000
+
+EDIT 2: As noted in a
