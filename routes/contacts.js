@@ -60,25 +60,13 @@ router.post(
   }
 );
 
-// @route   PUT api/contacts/:ud
+// @route   PUT api/contacts/:id
 // @desc    Update a contact
 // @access  Private
 router.put('/:id', auth, async (req, res) => {
   const { name, email, phone, type } = req.body;
 
-  // Build Contact object
-
-  // name = name ? name : '';
-  // email = email ? email : '';
-  // phone = phone ? phone : '';
-  // type = type ? type : '';
-
-  // const contactFields = {
-  //   name: name ? name : '',
-  //   email: email ? email : '',
-  //   phone: phone ? phone : '',
-  //   type: type ? type : ''
-  // };
+  
 
   const contactFields = {};
   if (name) contactFields.name = name;

@@ -6,7 +6,7 @@ import * as actionType from '../types';
 
 const ContactState = props => {
   const initialState = {
-    contacts: [],
+    contacts: null,
     current: null,
     filtered: null,
     error: null
@@ -16,6 +16,22 @@ const ContactState = props => {
 
   // Actions   ***********
 
+  // Get Contacts
+
+  const getContacts = async () => {
+    try {
+      const res = await axios.get('api/contacts');
+      dispatch({
+        type: actionType.GET_CONTACTS,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: actionType.CONTACT_ERROR,
+        payload: err.response.msg
+      });
+    }
+  };
   // Add Contact
 
   const addContact = async contact => {
@@ -40,8 +56,45 @@ const ContactState = props => {
   };
 
   // Delete Contact
-  const deleteContact = id => {
-    dispatch({ type: actionType.DELETE_CONTACT, payload: id });
+  const deleteContact = async id => {
+    try {
+      await axios.delete(`api/contacts/${id}`);
+      dispatch({
+        type: actionType.DELETE_CONTACT,
+        payload: id
+      });
+    } catch (err) {
+      dispatch({
+        type: actionType.CONTACT_ERROR,
+        payload: err.response.msg
+      });
+    }
+  };
+
+  // Update Contact
+  const updateContact = async contact => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    try {
+      const res = await axios.put(
+        `api/contacts/${contact._id}`,
+        contact,
+        config
+      );
+      dispatch({
+        type: actionType.UPDATE_CONTACT,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: actionType.CONTACT_ERROR,
+        payload: err.response.msg
+      });
+    }
   };
 
   // Set Current Contact
@@ -53,10 +106,7 @@ const ContactState = props => {
   const clearCurrent = () => {
     dispatch({ type: actionType.CLEAR_CURRENT });
   };
-  // Update Contact
-  const updateContact = contact => {
-    dispatch({ type: actionType.UPDATE_CONTACT, payload: contact });
-  };
+
   // Filter Contacts
   const filterContacts = text => {
     dispatch({ type: actionType.FILTER_CONTACTS, payload: text });
@@ -65,6 +115,12 @@ const ContactState = props => {
 
   const clearFilter = () => {
     dispatch({ type: actionType.CLEAR_FILTER });
+  };
+
+  // Clear Contacts
+
+  const clearContacts = () => {
+    dispatch({ type: actionType.CLEAR_CONTACTS });
   };
 
   return (
@@ -80,7 +136,9 @@ const ContactState = props => {
         clearCurrent,
         updateContact,
         filterContacts,
-        clearFilter
+        clearFilter,
+        getContacts,
+        clearContacts
       }}
     >
       {props.children}
