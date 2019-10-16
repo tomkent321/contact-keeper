@@ -11,16 +11,14 @@ export default (state, action) => {
       return {
         ...state,
         contacts: state.contacts.filter(
-          contact => contact.id !== action.payload
+          contact => contact._id !== action.payload
         )
       };
-
     case actionType.SET_CURRENT:
       return {
         ...state,
         current: action.payload
       };
-
     case actionType.CLEAR_CURRENT:
       return {
         ...state,
@@ -33,7 +31,6 @@ export default (state, action) => {
           contact.id === action.payload.id ? action.payload : contact
         )
       };
-
     case actionType.FILTER_CONTACTS:
       return {
         ...state,
@@ -42,11 +39,15 @@ export default (state, action) => {
           return contact.name.match(regex) || contact.email.match(regex);
         })
       };
-
     case actionType.CLEAR_FILTER:
       return {
         ...state,
         filtered: null
+      };
+    case actionType.CONTACT_ERROR:
+      return {
+        ...state,
+        error: action.payload
       };
     default:
       return state;
